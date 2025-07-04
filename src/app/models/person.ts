@@ -1,27 +1,32 @@
 export enum Gender {
-  MALE = 'masculin',
-  FEMALE = 'féminin',
-  NOT_SPECIFIED = 'ne se prononce pas',
-  Other = "Other",
+  MALE = 'Masculin',
+  FEMALE = 'Féminin',
+  OTHER = 'Autre',
 }
 
 export enum Profile {
-  SHY = 'timide',
-  RESERVED = 'réservé',
-  COMFORTABLE = "à l'aise",
-  Other = "Other",
+  SHY = 'Timide',
+  RESERVED = 'Réservé',
+  COMFORTABLE = 'À l\'aise',
+  LEADER = 'Leader',
+  DISCRETE = 'Discret',
 }
 
 export interface Person {
-  id: number;
+  id?: number;
   first_name: string;
   last_name: string;
   age: number;
-  gender: Gender;
-  french_level: number;     // 0 < N < 5
-  tech_level: number;       // 0 < N < 5
+  gender: Gender | string;
+  french_level: number;     // 1 to 4
+  tech_level: number;       // 1 to 4
   dwwm: boolean;
-  profile: Profile;
-  slug: string;
-  liste_id: number;
+  profile: Profile | string;
+  slug?: string;
+  liste_id?: number;
+  liste?: {
+    name: string;
+    description?: string;
+    slug: string;
+  };
 }

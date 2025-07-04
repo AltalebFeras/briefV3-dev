@@ -8,22 +8,20 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+
 import { ListService } from '../../core/services/list.service';
 import { ListPersonService } from '../../core/services/list-person.service';
+import { DrawService } from '../../core/services/draw.service';
 import { List } from '../../models/list';
-import { Person, Gender, Profile } from '../../models/person';
-import { GroupPageComponent } from '../../Groups/group-page/group-page.component';
+import { Person } from '../../models/person';
+import { DrawListItem, DrawDetails } from '../../models/draw.model';
 import { PersonFormComponent } from './person-form.component';
 import { PeopleTableComponent } from './people-table.component';
 
 @Component({
   selector: 'app-list-detail',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    PeopleTableComponent
-],
+  imports: [CommonModule, ReactiveFormsModule, PeopleTableComponent],
   templateUrl: './list-detail.component.html',
   styleUrls: ['./list-detail.component.css'],
 })
@@ -31,13 +29,14 @@ export class ListDetailComponent implements OnInit {
   list: List | undefined;
   listSlug!: string;
   isLoading = true;
-
-  personForm!: FormGroup;
-  showPersonForm = false;
-  editingPerson: Person | null = null;
   errorMessage = '';
-  genderOptions = Object.values(Gender);
-  profileOptions = Object.values(Profile);
+
+  // Draw-related properties
+  draws: DrawListItem[] = [];
+  selectedDraw: DrawDetails | null = null;
+  drawForm: FormGroup;
+  isCreatingDraw = false;
+  showDrawForm = false;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -45,11 +44,16 @@ export class ListDetailComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly dialog: MatDialog,
     private readonly listService: ListService,
-    private readonly listPersonService: ListPersonService
-  ) {}
+    private readonly listPersonService: ListPersonService,
+    private readonly drawService: DrawService
+  ) {
+    this.drawForm = this.fb.group({
+      number_of_groups: [2, [Validators.required, Validators.min(2)]],
+      draw_name: [''],
+    });
+  }
 
   ngOnInit(): void {
-    this.initForm();
     this.route.paramMap.subscribe((params) => {
       const slug = params.get('slug');
       if (!slug) {
@@ -58,39 +62,7 @@ export class ListDetailComponent implements OnInit {
       }
       this.listSlug = slug;
       this.loadList();
-    });
-  }
-
-  initForm(): void {
-    this.personForm = this.fb.group({
-      first_name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50),
-        ],
-      ],
-      last_name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50),
-        ],
-      ],
-      gender: ['', Validators.required],
-      age: [null, [Validators.required, Validators.min(1), Validators.max(99)]],
-      french_level: [
-        null,
-        [Validators.required, Validators.min(1), Validators.max(4)],
-      ],
-      tech_level: [
-        null,
-        [Validators.required, Validators.min(1), Validators.max(4)],
-      ],
-      dwwm: [false, Validators.required],
-      profile: ['', Validators.required],
+      this.loadDraws();
     });
   }
 
@@ -99,24 +71,28 @@ export class ListDetailComponent implements OnInit {
 
     this.listService.getListBySlug(this.listSlug).subscribe({
       next: (data) => {
+        console.log('List data received:', data); // Debug log
         this.list = data;
         if (this.list) {
           this.list.people = this.list.people ?? [];
+          // Ensure slug is set from the URL parameter if missing
+          if (!this.list.slug) {
+            this.list.slug = this.listSlug;
+          }
         }
 
-        // 🟢 Get persons using the correct API endpoint
         this.listPersonService.getPersonsByListSlug(this.listSlug).subscribe({
           next: (persons) => {
+            console.log('Persons received:', persons); // Debug log
             if (this.list) {
-              console.log('Personnes reçues:', persons);
               this.list.people = persons;
             }
             this.isLoading = false;
           },
           error: (err) => {
-            console.warn('Aucune personne trouvée ou erreur:', err.message);
+            console.warn('Aucune personne trouvée:', err.message);
             if (this.list) {
-              this.list.people = []; // Set empty array if no persons found
+              this.list.people = [];
             }
             this.isLoading = false;
           },
@@ -130,82 +106,137 @@ export class ListDetailComponent implements OnInit {
     });
   }
 
+  loadDraws(): void {
+    this.drawService.getAllDrawsForList(this.listSlug).subscribe({
+      next: (response) => {
+        this.draws = response.data || [];
+      },
+      error: (err) => {
+        console.warn('Aucun tirage trouvé:', err.message);
+        this.draws = [];
+      },
+    });
+  }
+
   togglePersonForm(): void {
+    console.log('Opening person form dialog');
+    console.log('List data:', this.list);
+    console.log('List slug from component:', this.listSlug);
+
+    // Use the component's listSlug instead of relying on list.slug
+    const slugToUse = this.list?.slug || this.listSlug;
+
+    if (!slugToUse) {
+      this.errorMessage = 'Impossible d\'ouvrir le formulaire - slug de liste manquant';
+      console.error('No slug available:', { listSlug: this.listSlug, listObject: this.list });
+      return;
+    }
+
     const dialogRef = this.dialog.open(PersonFormComponent, {
-      panelClass: 'person-form-dialog',
       width: '90vw',
+      maxWidth: '600px',
       maxHeight: '90vh',
       autoFocus: false,
+      disableClose: false,
       data: {
-        listSlug: this.list?.slug,
+        listSlug: slugToUse,
         listId: this.list?.id,
       },
     });
 
+    console.log('Dialog opened with data:', {
+      listSlug: slugToUse,
+      listId: this.list?.id,
+    });
+
     dialogRef.afterClosed().subscribe((result) => {
+      console.log('Dialog closed with result:', result);
       if (result === 'success') {
-        this.loadList(); // ✅ recharge uniquement si ajout réussi
+        console.log('Person added successfully, reloading list');
+        this.loadList();
       }
     });
   }
 
-  onSubmit(): void {
-    if (!this.listSlug) {
-      this.errorMessage = 'Liste invalide.';
+  deletePerson(person: Person): void {
+    if (!person.slug) {
+      this.errorMessage = 'Impossible de supprimer cette personne - slug manquant';
       return;
     }
-    if (this.personForm.invalid) return;
 
-    const formValue = this.personForm.value;
-
-    const personPayload = {
-      list: this.listSlug,
-      first_name: formValue.first_name?.trim(),
-      last_name: formValue.last_name?.trim(),
-      gender: formValue.gender,
-      age: formValue.age,
-      french_level: formValue.french_level,
-      tech_level: formValue.tech_level,
-      dwwm: formValue.dwwm,
-      profile: formValue.profile,
-    };
-
-    this.listPersonService
-      .addPersonToList(this.listSlug, personPayload)
-      .subscribe({
-        next: () => {
-          this.loadList();
-          this.togglePersonForm();
-        },
-        error: (err) => {
-          this.errorMessage =
-            err?.error?.errors?.first_name?.[0] ||
-            err.message ||
-            'Erreur lors de l’envoi';
-        },
-      });
+    this.listPersonService.deletePerson(person.slug).subscribe({
+      next: () => {
+        this.loadList();
+      },
+      error: (err) => {
+        this.errorMessage = err.message || 'Erreur lors de la suppression';
+      },
+    });
   }
 
-  deletePerson(person: Person): void {
-    if (confirm(`Supprimer ${person.first_name} ${person.last_name} ?`)) {
-      this.listPersonService.deletePerson(person.slug).subscribe({
-        next: () => this.loadList(),
-        error: (err) => (this.errorMessage = err.message),
-      });
+  toggleDrawForm(): void {
+    this.showDrawForm = !this.showDrawForm;
+    if (this.showDrawForm) {
+      this.drawForm.reset({ number_of_groups: 2, draw_name: '' });
+      this.errorMessage = '';
     }
+  }
+
+  createDraw(): void {
+    if (this.drawForm.invalid || this.isCreatingDraw) return;
+
+    if (!this.list?.people || this.list.people.length < 2) {
+      this.errorMessage = 'Il faut au moins 2 personnes pour créer un tirage';
+      return;
+    }
+
+    const numberOfGroups = this.drawForm.value.number_of_groups;
+    if (numberOfGroups > this.list.people.length) {
+      this.errorMessage = `Impossible de créer ${numberOfGroups} groupes avec seulement ${this.list.people.length} personne(s)`;
+      return;
+    }
+
+    this.isCreatingDraw = true;
+    this.errorMessage = '';
+
+    const request = {
+      list_slug: this.listSlug,
+      number_of_groups: numberOfGroups,
+      draw_name: this.drawForm.value.draw_name?.trim() || undefined,
+    };
+
+    this.drawService.createDraw(request).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.selectedDraw = response.data;
+          this.loadDraws();
+          this.toggleDrawForm();
+        }
+        this.isCreatingDraw = false;
+      },
+      error: (err) => {
+        this.errorMessage = err.message || 'Erreur lors de la création du tirage';
+        this.isCreatingDraw = false;
+      },
+    });
+  }
+
+  viewDraw(drawName: string): void {
+    this.drawService.getDrawDetails(drawName).subscribe({
+      next: (response) => {
+        this.selectedDraw = response.data;
+      },
+      error: (err) => {
+        this.errorMessage = err.message || 'Erreur lors du chargement du tirage';
+      },
+    });
+  }
+
+  closeDraw(): void {
+    this.selectedDraw = null;
   }
 
   goBack(): void {
     this.router.navigate(['/lists']);
-  }
-
-  openGroupDialog(listId: string): void {
-    this.dialog.open(GroupPageComponent, {
-      panelClass: 'group-dialog',
-      width: '90vw',
-      maxHeight: '90vh',
-      autoFocus: false,
-      data: { listId },
-    });
   }
 }

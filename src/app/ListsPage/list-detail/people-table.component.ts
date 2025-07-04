@@ -15,20 +15,17 @@ export class PeopleTableComponent {
   @Output() editPerson = new EventEmitter<Person>();
   @Output() deletePerson = new EventEmitter<Person>();
 
-  ngOnChanges(): void {
-  console.log('Persons input:', this.persons);
-}
-
   onEdit(person: Person): void {
     this.editPerson.emit(person);
   }
 
   onDelete(person: Person): void {
-    this.deletePerson.emit(person);
+    if (confirm(`Supprimer ${person.first_name} ${person.last_name} ?`)) {
+      this.deletePerson.emit(person);
+    }
   }
 
   trackByPersonId(index: number, person: Person): string | number {
-  return person.id ?? person.slug ?? index;
-}
-
+    return person.id ?? person.slug ?? index;
+  }
 }

@@ -1,18 +1,123 @@
 @if (!isLoading && list) {
   <div class="list-detail-container">
-    
+
     <!-- Header -->
     <div class="header-actions">
       <button class="btn-back" (click)="goBack()">← Retour Aux Listes</button>
       <h1 class="list-title">{{ list.name }}</h1>
-      <button class="btn-primary" (click)="togglePersonForm()">Ajouter une personne</button>
+      <div class="action-buttons">
+        <button class="btn-primary" (click)="togglePersonForm()">Ajouter une personne</button>
+        <button class="btn-secondary" (click)="toggleDrawForm()">
+          {{ showDrawForm ? 'Annuler' : 'Créer un tirage' }}
+        </button>
+      </div>
     </div>
 
-    <!-- Liste des personnes -->
-    @if (list.people && list.people.length > 0) {
-      <app-people-table [persons]="list.people"></app-people-table>
-    } @else {
-      <p class="empty-message">Aucune personne dans cette liste.</p>
+    <!-- Draw Form -->
+    @if (showDrawForm) {
+      <div class="draw-form-card">
+        <h3>Créer un nouveau tirage</h3>
+        <form [formGroup]="drawForm" (ngSubmit)="createDraw()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="number_of_groups">Nombre de groupes *</label>
+              <input
+                type="number"
+                id="number_of_groups"
+                formControlName="number_of_groups"
+                min="2"
+                [max]="list.people?.length || 2"
+                class="input"
+              />
+            </div>
+            <div class="form-group">
+              <label for="draw_name">Nom du tirage (optionnel)</label>
+              <input
+                type="text"
+                id="draw_name"
+                formControlName="draw_name"
+                placeholder="Ex: Tirage Janvier 2024"
+                class="input"
+              />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button
+              type="submit"
+              class="btn-primary"
+              [disabled]="drawForm.invalid || isCreatingDraw || (list.people?.length || 0) < 2"
+            >
+              {{ isCreatingDraw ? 'Création...' : 'Créer le tirage' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    }
+
+    <!-- Error Message -->
+    @if (errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    }
+
+    <!-- People Section -->
+    <div class="section">
+      <h2>Personnes ({{ list.people?.length || 0 }})</h2>
+      @if (list.people && list.people.length > 0) {
+        <app-people-table
+          [persons]="list.people"
+          (deletePerson)="deletePerson($event)"
+        ></app-people-table>
+      } @else {
+        <p class="empty-message">Aucune personne dans cette liste. Ajoutez des personnes pour pouvoir créer des tirages.</p>
+      }
+    </div>
+
+    <!-- Draws Section -->
+    <div class="section">
+      <h2>Historique des tirages ({{ draws.length }})</h2>
+      @if (draws.length > 0) {
+        <div class="draws-list">
+          @for (draw of draws; track draw.id) {
+            <div class="draw-item" (click)="viewDraw(draw.name)">
+              <h4>{{ draw.name }}</h4>
+              <p>{{ draw.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="empty-message">Aucun tirage effectué.</p>
+      }
+    </div>
+
+    <!-- Draw Details Modal -->
+    @if (selectedDraw) {
+      <div class="modal-overlay" (click)="closeDraw()">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h3>{{ selectedDraw.draw_name || 'Détails du tirage' }}</h3>
+            <button class="close-btn" (click)="closeDraw()">×</button>
+          </div>
+          <div class="modal-body">
+            <p><strong>{{ selectedDraw.groups_count }} groupes</strong> -
+               <strong>{{ selectedDraw.total_persons || 0 }} personnes au total</strong></p>
+
+            @for (group of selectedDraw.groups; track $index) {
+              <div class="group-card">
+                <h4>{{ group.name }} ({{ group.persons_count }} personne{{ group.persons_count > 1 ? 's' : '' }})</h4>
+                <ul>
+                  @for (person of group.persons; track $index) {
+                    <li>{{ person.first_name }} {{ person.last_name }}</li>
+                  }
+                </ul>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
     }
   </div>
+}
+
+@if (isLoading) {
+  <div class="loading">Chargement...</div>
 }

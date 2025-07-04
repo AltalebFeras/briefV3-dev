@@ -21,9 +21,27 @@ export class ListService {
 }
 
  getListBySlug(slug: string): Observable<List> {
+  console.log('Getting list by slug:', slug); // Debug log
   return this.http
     .get<{ success: boolean; data: List; token?: string }>(`${this.apiUrl}/show/${encodeURIComponent(slug)}`)
-    .pipe(map((res) => res.data));
+    .pipe(
+      map((res) => {
+        console.log('API response for list:', res); // Debug log
+        if (res.success && res.data) {
+          // Ensure slug is preserved in the returned data
+          const listData = res.data;
+          if (!listData.slug) {
+            listData.slug = slug;
+          }
+          return listData;
+        }
+        throw new Error('Invalid response structure');
+      }),
+      catchError(error => {
+        console.error('Error fetching list:', error);
+        throw error;
+      })
+    );
 }
 
 createList(payload: { name: string; description?: string }): Observable<boolean> {
