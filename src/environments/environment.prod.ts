@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://193.134.250.16/api', // Use HTTPS if available
+  apiUrl: '/api', // Use relative URL for Netlify proxy
   appName: 'ShuffleMyTeam'
 };

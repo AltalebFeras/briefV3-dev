@@ -3,7 +3,7 @@ import { List } from '../../models/list';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({

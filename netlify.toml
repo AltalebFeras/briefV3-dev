@@ -2,12 +2,15 @@
   publish = "dist/briefV3-dev"
   command = "npm run build:prod"
 
+# API Proxy - This redirects /api/* to your backend
 [[redirects]]
   from = "/api/*"
   to = "http://193.134.250.16/api/:splat"
   status = 200
   force = true
+  headers = {X-From = "Netlify"}
 
+# SPA fallback - This must come after the API proxy
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -16,6 +19,7 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -24,6 +28,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
+# Cache static assets
 [[headers]]
   for = "/assets/*"
   [headers.values]

@@ -7,13 +7,14 @@ import {
   DrawListResponse,
   DrawDetailResponse
 } from '../../models/draw.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DrawService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://193.134.250.16/api';
+  private apiUrl = environment.apiUrl; // Use environment variable
 
   // ✨ Create new draw
   createDraw(request: CreateDrawRequest): Observable<DrawResponse> {

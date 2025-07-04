@@ -1,8 +1,9 @@
-import { inject, Injectable } from '@angular/core';
-import { User } from '../models/user.model';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap, catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class AuthService {
 
   // 📡 Injection du client HTTP Angular via la fonction `inject()` (nouvelle syntaxe Angular)
   private http = inject(HttpClient);
+  private router = inject(Router);
 
   // 🔒 URL de base de l’API utilisée pour les appels liés à l’authentification
   private apiUrl = environment.apiUrl; // Use environment variable
@@ -56,17 +58,22 @@ export class AuthService {
    * 🔐 Méthode de connexion
    * Envoie les identifiants de connexion à l’API et enregistre le token et l’utilisateur dans le localStorage
    */
-  login(credentials: { email: string; password: string }): Observable<User> {
+  login(credentials: { email: string; password: string }): Observable<any> {
+    console.log('Making login request to:', `${this.apiUrl}/login`);
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
-      map((res) => {
-        if (res.success && res.token && res.user) {
-          localStorage.setItem('token', res.token);
-          localStorage.setItem('currentUser', JSON.stringify(res.user));
-          this.currentUser = res.user;
-          return res.user;
+      tap(response => {
+        console.log('Login response:', response);
+        if (response.success && response.token && response.user) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('currentUser', JSON.stringify(response.user));
+          this.currentUser = response.user;
         } else {
-          throw new Error(res.message || 'Erreur de connexion');
+          throw new Error(response.message || 'Erreur de connexion');
         }
+      }),
+      catchError(error => {
+        console.error('Login error:', error);
+        return throwError(() => error);
       })
     );
   }
@@ -130,18 +137,11 @@ export class AuthService {
   //   localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
   // }
 
-  register(formData: {
-    email: string;
-    password: string;
-    confirm_password: string;
-    first_name: string;
-    last_name: string;
-    cgu_accepted: boolean;
-  }): Observable<User> {
-    return this.http.post<any>(`${this.apiUrl}/register`, formData).pipe(
-      map((res) => {
-        if (res.success && res.user) {
-          localStorage.removeItem('token'); // ← si une ancienne session reste en cache
+  register(userData: any): Observable<any> {
+    console.log('Making register request to:', `${this.apiUrl}/register`);
+    return this.http.post<any>(`${this.apiUrl}/register`, userData);
+  }
+}
           localStorage.setItem('currentUser', JSON.stringify(res.user));
           this.currentUser = res.user;
           return res.user;

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Person } from '../../models/person';
 import { Observable, map, catchError, throwError } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,7 @@ export class ListPersonService {
   // ✅ Create person
   addPersonToList(listSlug: string, personData: any): Observable<Person> {
     console.log('Adding person to list:', listSlug);
+    console.log('API URL:', `${this.apiUrl}/person/new`);
     console.log('Person data:', personData);
 
     if (!listSlug) {
