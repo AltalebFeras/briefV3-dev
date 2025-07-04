@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "briefV3": {
+    "briefV3-dev": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -11,21 +11,17 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/brief-v3",
+            "outputPath": "dist/briefV3-dev",
             "index": "src/index.html",
-            "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              {
-                "glob": "**/*",
-                "input": "public",
-                "output": "/"
-              }
+              "src/_redirects"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/rose-red.css",
@@ -39,33 +35,33 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "500kb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             }
-          },
-          "defaultConfiguration": "production"
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "briefV3:build:production"
+              "buildTarget": "briefV3-dev:build:production"
             },
             "development": {
-              "buildTarget": "briefV3:build:development"
+              "buildTarget": "briefV3-dev:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,6 +90,10 @@
       }
     }
   },
+  "cli": {
+    "analytics": false
+  }
+}
   "cli": {
     "analytics": false
   }

@@ -24,7 +24,10 @@ export const routes: Routes = [
     component: AuthenticatedLayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'lists', component: ListsUserComponent },
+      {
+        path: 'lists',
+        loadComponent: () => import('./ListsPage/lists/lists.component').then(m => m.ListsUserComponent)
+      },
       { path: 'lists/:slug', component: ListDetailComponent },
       { path: 'list-preview/:slug', component: ListPreviewComponent },
       { path: 'profile', component: ProfileComponent },
