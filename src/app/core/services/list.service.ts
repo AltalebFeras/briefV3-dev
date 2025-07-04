@@ -3,7 +3,7 @@ import { List } from '../../models/list';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, of } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -12,9 +12,8 @@ import { environment } from '../../environments/environment';
 export class ListService {
 
   private http = inject(HttpClient);
-  private apiUrl = environment.apiUrl; // Use environment variable
   private apiUrls = `${environment.apiUrl}/lists`;
-  private apiUrlSingle = `${environment.apiUrl}/list`;
+  private apiUrl = `${environment.apiUrl}/list`;
 
  getAllLists(): Observable<List[]> {
   return this.http
@@ -25,7 +24,7 @@ export class ListService {
  getListBySlug(slug: string): Observable<List> {
   console.log('Getting list by slug:', slug); // Debug log
   return this.http
-    .get<{ success: boolean; data: List; token?: string }>(`${this.apiUrlSingle}/show/${encodeURIComponent(slug)}`)
+    .get<{ success: boolean; data: List; token?: string }>(`${this.apiUrl}/show/${encodeURIComponent(slug)}`)
     .pipe(
       map((res) => {
         console.log('API response for list:', res); // Debug log
@@ -47,7 +46,7 @@ export class ListService {
 }
 
 createList(payload: { name: string; description?: string }): Observable<boolean> {
-  return this.http.post<any>(`${this.apiUrlSingle}/new`, payload).pipe(
+  return this.http.post<any>(`${this.apiUrl}/new`, payload).pipe(
     map(res => res.success === true),
     catchError(err => {
       console.error('Erreur création liste:', err);
@@ -58,12 +57,12 @@ createList(payload: { name: string; description?: string }): Observable<boolean>
 
   updateList(id: number, payload: { name?: string; description?: string }): Observable<List> {
     return this.http
-      .put<{ success: boolean; data: List }>(`${this.apiUrlSingle}/${id}/edit`, payload)
+      .put<{ success: boolean; data: List }>(`${this.apiUrl}/${id}/edit`, payload)
       .pipe(map((res) => res.data));
   }
 
  deleteList(slug: string): Observable<boolean> {
-  return this.http.delete<any>(`${this.apiUrlSingle}/delete/${encodeURIComponent(slug)}`).pipe(
+  return this.http.delete<any>(`${this.apiUrl}/delete/${encodeURIComponent(slug)}`).pipe(
     map(res => res.success === true)
   );
 }
@@ -73,3 +72,4 @@ createList(payload: { name: string; description?: string }): Observable<boolean>
   //   return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
   // }
 }
+

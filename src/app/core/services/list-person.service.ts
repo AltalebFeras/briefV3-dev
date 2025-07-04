@@ -2,14 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Person } from '../../models/person';
 import { Observable, map, catchError, throwError } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ListPersonService {
   private readonly http = inject(HttpClient);
-  private apiUrl = environment.apiUrl; // Use environment variable
+  private apiUrl = environment.apiUrl;
 
   // ✅ Create person
   addPersonToList(listSlug: string, personData: any): Observable<Person> {
@@ -96,10 +96,8 @@ export class ListPersonService {
     console.error('Error body:', error.error);
 
     if (error.error?.error) {
-      // Handle single error message (404 case)
       errorMessage = error.error.error;
     } else if (error.error?.errors) {
-      // Handle validation errors (406 case)
       const errors = error.error.errors;
       const firstErrorKey = Object.keys(errors)[0];
       if (firstErrorKey && errors[firstErrorKey]) {
@@ -117,3 +115,4 @@ export class ListPersonService {
     return throwError(() => new Error(errorMessage));
   }
 }
+  

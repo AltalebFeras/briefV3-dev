@@ -7,7 +7,7 @@ import {
   DrawListResponse,
   DrawDetailResponse
 } from '../../models/draw.model';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

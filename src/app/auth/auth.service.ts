@@ -16,7 +16,7 @@ export class AuthService {
   private router = inject(Router);
 
   // 🔒 URL de base de l’API utilisée pour les appels liés à l’authentification
-  private apiUrl = environment.apiUrl; // Use environment variable
+  private apiUrl = environment.apiUrl; // This will use the dev environment when running ng serve
 
   constructor() {
     this.loadUserFromStorage();
@@ -139,9 +139,10 @@ export class AuthService {
 
   register(userData: any): Observable<any> {
     console.log('Making register request to:', `${this.apiUrl}/register`);
-    return this.http.post<any>(`${this.apiUrl}/register`, userData);
-  }
-}
+    return this.http.post<any>(`${this.apiUrl}/register`, userData).pipe(
+      tap(res => {
+        console.log('Register response:', res);
+        if (res.success && res.user) {
           localStorage.setItem('currentUser', JSON.stringify(res.user));
           this.currentUser = res.user;
           return res.user;
