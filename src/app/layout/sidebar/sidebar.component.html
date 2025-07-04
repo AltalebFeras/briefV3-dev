@@ -1,0 +1,44 @@
+@if (isOpen() && isMobile()) {
+  <div class="blur-overlay" (click)="toggleSidebar()" tabindex="0" (keydown)="toggleSidebar()"></div>
+}
+
+
+<!-- Bouton pour ouvrir/fermer la sidebar -->
+<button class="sidebar-toggle" (click)="toggleSidebar()">
+  {{ isOpen() ? "✕" : "☰" }}
+</button>
+
+
+
+
+@if (isOpen()) {
+<nav class="sidebar">
+
+  <!-- Zone scrollable -->
+  <ul class="nav-links">
+    @for (link of sidebarLinks; track link.id) {
+    @if (link.roles.includes(userRole || adminRole)) {
+    <li>
+      <a [routerLink]="link.path" [class.active]="isActive(link.path)">
+        {{ link.label }}
+      </a>
+    </li>
+    }
+    }
+  </ul>
+
+  <!-- <img src="assets/logo.png" alt="Logo mobile" class="sidebar-logo mobile-logo" /> -->
+  <img src="assets/logoSimplon.png" alt="Logo Simplon" class="sidebar-logo" />
+
+  <!-- Zone fixe en bas -->
+  <div class="sidebar-bottom">
+<a routerLink="/profile" [class.active]="isActive('/profile')" title="Profil">
+  <img src="icons/Profile.png" alt="Profil" class="icon-img" />
+</a>
+
+    <a (click)="logout()" title="Déconnexion">
+      <img src="icons/Logout.png" alt="Déconnexion" class="icon-img" />
+    </a>
+  </div>
+</nav>
+}

@@ -1,0 +1,76 @@
+<div class="login-wrapper">
+  <div class="welcome-container">
+    @if (editModeLogo){
+    <input type="file" accept="image/*" (change)="saveLogo($event)" />
+    <button (click)="editModeLogo = false">❌</button>
+
+    } @else {
+    <img
+      [src]="logo()"
+      [alt]="title()"
+      (input)="tempLogo.set($any($event.target).value)"
+    /><button (click)="editLogo()">✏️</button>
+
+    }
+    <h1>
+      Bienvenue sur @if (editMode){
+      <input
+        type="text"
+        [value]="tempTitle()"
+        (input)="tempTitle.set($any($event.target).value)"
+      /><button (click)="saveTitle()">✅</button>
+      } @else {
+      <span class="highlight">{{ title() }}</span
+      ><button (click)="editTitle()">✏️</button>
+      }
+    </h1>
+
+    <p>
+      Créez un compte ou connectez-vous pour gérer vos
+      <strong>listes de personnes</strong> et générer des
+      <strong>groupes aléatoires</strong> selon vos critères.
+    </p>
+
+    <p>
+      Utilisez la <strong>barre latérale</strong> pour naviguer entre vos
+      listes, groupes ou profil utilisateur. Restez organisé·e et gagnez du
+      temps !
+    </p>
+
+    <p class="tagline">
+      <em>Organisez, personnalisez, partagez... simplement.</em>
+    </p>
+  </div>
+
+  <div class="login-form-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <h2>Se connecter</h2>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" [disabled]="loginForm.invalid">
+          Se connecter
+        </button>
+        <button type="button" (click)="onSignupClick()">S’inscrire</button>
+      </div>
+    </form>
+  </div>
+</div>

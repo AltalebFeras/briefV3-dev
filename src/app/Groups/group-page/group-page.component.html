@@ -1,0 +1,32 @@
+<button (click)="close()" class="close-btn">✕</button>
+
+<app-group-form (generate)="onGenerate($event)"></app-group-form>
+
+@if (groups().length > 0) {
+<section class="group-display-wrapper">
+  <app-group-display
+    [groups]="groups()"
+    [isValidated]="isValidated()"
+  ></app-group-display>
+
+  <button
+    (click)="handleValidateAndRedirect(groups())"
+    [disabled]="isValidated() || groups().length === 0"
+    class="validate-btn"
+  >
+    Valider le tirage
+  </button>
+</section>
+} @if (groups.length > 0) {
+<section>
+  <h3>Groupes générés :</h3>
+  @for (group of groups(); track group.name) {
+  <h4>{{ group.name }}</h4>
+  <ul>
+    @for (member of group.members; track member.id) {
+    <li>{{ member.first_name }}</li>
+    }
+  </ul>
+  }
+</section>
+}

@@ -1,0 +1,64 @@
+<div class="list-preview-container">
+  @if (!list) {
+  <div class="loading">
+    <p>Loading list...</p>
+  </div>
+}
+  @if (!isLoading && list ) {
+    <div class="header-actions">
+      <div>
+        <button class="btn-back" (click)="goBack()">&larr; Back to Home</button>
+        <h1>{{ list.name }}</h1>
+      </div>
+      <div class="action-buttons">
+        <button class="btn-red" (click)="login()">Login to Edit</button>
+      </div>
+    </div>
+
+    @if (list.people?.length === 0) {
+  <div class="no-people">
+    <p>This list has no people yet.</p>
+  </div>
+} @else if ((list.people?.length ?? 0) > 0) {
+  <div class="people-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Profile</th>
+          <th>French</th>
+          <th>Tech</th>
+          <th>DWWM</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (person of list.people; track person.id) {
+          <tr>
+            <td>{{ person.first_name }} {{ person.last_name }}</td>
+            <td>{{ person.age }}</td>
+            <td>{{ person.gender }}</td>
+            <td>{{ person.profile }}</td>
+            <td>{{ person.french_level }}/4</td>
+            <td>{{ person.tech_level }}/4</td>
+            <td>{{ person.dwwm ? 'Oui' : 'Non' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+
+    @if (errorMessage) {
+      <div class="error-msg">
+        {{ errorMessage }}
+      </div>
+    }
+  } @else {
+    <div class="loading">
+      <p>Loading list...</p>
+    </div>
+  }
+</div>

@@ -1,0 +1,17 @@
+main {
+  height: 100%;
+  padding: 50px;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  font-weight: bold;
+}
+
+span {
+  color: #d10000;
+  font-weight: bold;
+}

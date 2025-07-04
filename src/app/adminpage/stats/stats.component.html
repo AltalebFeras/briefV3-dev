@@ -1,0 +1,29 @@
+<main>
+  <h1>Statistiques</h1>
+
+  <p>
+    Nombre total d'utilisateurs : <span>{{ userCount() }}</span>
+  </p>
+
+  <p>
+    Nombre total de listes : <span>{{ listCount() }}</span>
+  </p>
+
+  <p>
+    Nombre de personnes par liste en moyenne : <span>{{ personCount() }}</span>
+  </p>
+
+  <p>
+    Nombre de groupes créés par liste en moyenne :
+    <span>{{ groupCount() }}</span>
+  </p>
+
+  <p>
+    Nombre de listes partagées : <span>{{ sharedListsAmount() }}</span>
+  </p>
+
+  <p>
+    Nombre d’utilisateurs associés à une liste partagée en moyenne :
+    <span>{{ sharedUsersAmount() }}</span>
+  </p>
+</main>

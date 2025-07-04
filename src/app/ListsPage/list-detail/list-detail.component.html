@@ -1,0 +1,18 @@
+@if (!isLoading && list) {
+  <div class="list-detail-container">
+    
+    <!-- Header -->
+    <div class="header-actions">
+      <button class="btn-back" (click)="goBack()">← Retour Aux Listes</button>
+      <h1 class="list-title">{{ list.name }}</h1>
+      <button class="btn-primary" (click)="togglePersonForm()">Ajouter une personne</button>
+    </div>
+
+    <!-- Liste des personnes -->
+    @if (list.people && list.people.length > 0) {
+      <app-people-table [persons]="list.people"></app-people-table>
+    } @else {
+      <p class="empty-message">Aucune personne dans cette liste.</p>
+    }
+  </div>
+}

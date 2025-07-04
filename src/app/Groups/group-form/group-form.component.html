@@ -1,0 +1,32 @@
+<form (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-group">
+    <label>
+      Nombre de groupes :
+      <input type="number" [(ngModel)]="numberOfGroups" name="numberOfGroups" min="2" required />
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label>
+      <input type="checkbox" [(ngModel)]="mixAge" name="mixAge" />
+      Mixer les âges
+    </label>
+
+    <label>
+      <input type="checkbox" [(ngModel)]="mixDWWM" name="mixDWWM" />
+      Mixer les anciens DWWM
+    </label>
+
+    <label>
+      <input type="checkbox" [(ngModel)]="mixGender" name="mixGender" />
+      Mixer les genres
+    </label>
+
+    <label>
+      <input type="checkbox" [(ngModel)]="mixLevel" name="mixLevel" />
+      Mixer les niveaux
+    </label>
+  </div>
+
+  <button type="submit">Générer les groupes</button>
+</form>

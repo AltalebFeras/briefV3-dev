@@ -1,0 +1,62 @@
+<div class="profile-container">
+  @if (isLoading) {
+  <div class="loader-overlay">
+    <div class="bouncing-loader">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  }
+  <!-- Partie gauche : infos ou formulaire -->
+  <div class="profile-card">
+    @if (editMode) {
+    <h2>Modifier mon profil</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="save()">
+      <label>Email :</label>
+      <input type="email" formControlName="email" />
+
+      <label>Prénom :</label>
+      <input type="text" formControlName="first_name" />
+
+      <label>Nom :</label>
+      <input type="text" formControlName="last_name" />
+
+      <div class="form-actions">
+        <button type="submit">Enregistrer</button>
+        <button type="button" (click)="toggleEditMode()">Annuler</button>
+      </div>
+    </form>
+    } @else if (user) {
+    <h2>Mon profil</h2>
+    <p><strong>Nom :</strong> {{ user.last_name }}</p>
+    <p><strong>Prénom :</strong> {{ user.first_name }}</p>
+    <p><strong>Email :</strong> {{ user.email }}</p>
+    <!-- <p><strong>Créé le :</strong> {{ user.created_at | date : "longDate" }}</p>
+    <p>
+      <strong>CGU Acceptée le :</strong>
+      {{ user.cgu_accepted_at | date : "longDate" }}
+    </p> -->
+    } @else {
+    <p>Chargement du profil...</p>
+    }
+  </div>
+
+  <!-- Partie droite : boutons -->
+  <div class="profile-actions">
+    @if (!editMode && user) {
+    <button type="button" (click)="toggleEditMode()" [disabled]="editMode">
+      Modifier mes informations
+    </button>
+    }
+    <hr />
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="confirmDelete()"
+      [disabled]="isDeleting"
+    >
+      @if (isDeleting) { Suppression... } @else { Supprimer mon compte }
+    </button>
+  </div>
+</div>

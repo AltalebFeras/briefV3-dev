@@ -1,0 +1,33 @@
+<div class="people-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Prénom</th>
+        <th>Nom</th>
+        <th>Genre</th>
+        <th>Âge</th>
+        <th>Aisance FR</th>
+        <th>Tech</th>
+        <th>DWWM</th>
+        <th>Profil</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let person of persons; trackBy: trackByPersonId">
+        <td>{{ person.first_name }}</td>
+        <td>{{ person.last_name }}</td>
+        <td>{{ person.gender }}</td>
+        <td>{{ person.age }}</td>
+        <td>{{ person.french_level }}</td>
+        <td>{{ person.tech_level }}</td>
+        <td>{{ person.dwwm ? 'Oui' : 'Non' }}</td>
+        <td>{{ person.profile }}</td>
+        <td>
+          <button (click)="onEdit(person)">✏️</button>
+          <button (click)="onDelete(person)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

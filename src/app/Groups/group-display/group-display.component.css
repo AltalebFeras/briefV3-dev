@@ -1,0 +1,90 @@
+/* Conteneur principal */
+.groups-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #F9F9FB;
+}
+
+/* Carte d’un groupe */
+.group-card {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E0E0E0;
+}
+
+/* Titre du groupe */
+.group-card h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #333333;
+}
+
+/* Liste des membres */
+.member-list {
+  min-height: 80px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px dashed #E0E0E0;
+}
+
+/* Élément drag (membre) */
+.member-item {
+  padding: 0.5rem 0.75rem;
+  background-color: #FFECEF;
+  color: #D10000;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: grab;
+}
+
+.member-item:active {
+  cursor: grabbing;
+}
+
+input {
+  margin-bottom: 10px; /* remonte l'input de 6px */
+}
+
+input.readonly {
+  background-color: transparent;
+  border: none;         
+  color: #555;
+  cursor: default;
+  outline: none;        
+}
+
+input:not(.readonly):focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0,123,255,.5);
+}
+
+
+
+@media (min-width: 768px) {
+  .groups-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .group-card {
+    width: 280px;
+  }
+
+  .validate-btn {
+    margin-top: 2rem;
+    align-self: center;
+  }
+}

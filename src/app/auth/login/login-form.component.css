@@ -1,0 +1,178 @@
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1.5rem 1rem;
+  gap: 1.5rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+img {
+  height: 100px;
+  width: 100px;
+}
+/* Texte au-dessus du formulaire */
+.login-text {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  color: #333;
+  font-weight: 600;
+  max-width: 100%;
+
+ 
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    font-weight: 600;
+  }
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 360px;
+}
+
+.login-form {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  width: 100%;
+  box-sizing: border-box;
+
+  h2 {
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #333;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: #123744;
+      box-shadow: 0 0 0 0.2rem rgba(18, 55, 68, 0.25);
+    }
+  }
+}
+
+.form-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  button {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    background-color: #123744;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #1a4c5c;
+    }
+  }
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.welcome-container {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  color: #333;
+}
+
+.welcome-container .highlight {
+  color: #b40e0e;
+  font-weight: bold;
+}
+
+.welcome-container .tagline {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* 💻 Responsive : 2 colonnes côte à côte sur écrans larges */
+@media (min-width: 768px) {
+  
+  .login-wrapper {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .login-text {
+    text-align: left;
+    max-width: 400px;
+
+    h3 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .login-form-container {
+    max-width: 400px;
+    margin-right: 90px; 
+  }
+
+  .form-buttons {
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+      width: 48%;
+    }
+  }
+}
+

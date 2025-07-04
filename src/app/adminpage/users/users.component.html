@@ -1,0 +1,44 @@
+<main>
+  <h1>Liste d'utilisateurs</h1>
+  @if (users().length > 0){
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Date CGU</th>
+          <th>Vérifié</th>
+          <th>Bloquer</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users(); track user.id){
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.roles[0] === "ROLE_USER" ? "utilisateur" : "admin" }}</td>
+          <td>{{ user.cgu_accepted }}</td>
+          <td>{{ user.is_verified ? "✅": "❌"}}</td>
+          <td>
+            <input
+              type="checkbox"
+              [checked]="user.is_blocked"
+              (change)="onToggleBlock(user)"
+            />
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p>Aucun utilisateur trouvé</p>
+  }
+</main>

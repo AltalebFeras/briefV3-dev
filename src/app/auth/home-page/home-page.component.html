@@ -1,0 +1,13 @@
+<div class="home-container">
+  <!-- Formulaire de connexion -->
+  <app-login-form (openSignup)="openModal()"></app-login-form>
+
+  <!-- Modale d'inscription (affichée si isModalOpen est true) -->
+  @if (isModalOpen) {
+    <app-signup-modal (close)="closeModal()"></app-signup-modal>
+  }
+  @if (isModalOpen) {
+  <app-signup-modal (close)="closeModal()"></app-signup-modal>
+}
+
+</div>

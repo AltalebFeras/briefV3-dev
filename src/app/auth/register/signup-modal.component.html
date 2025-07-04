@@ -1,0 +1,96 @@
+<div class="modal">
+  <div class="modal-content">
+    <!-- ❌ Croix de fermeture -->
+    <button class="close-button" (click)="onClose()">×</button>
+
+    <h2>Créer un compte</h2>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <label for="first_name">Prénom</label>
+      <input
+        id="first_name"
+        type="text"
+        formControlName="first_name"
+        autocomplete="given-name"
+      />
+      @if (submitted && signupForm.get('first_name')?.invalid) {
+      <p class="error">Prénom requis.</p>
+      }
+
+      <label for="last_name">Nom</label>
+      <input
+        id="last_name"
+        type="text"
+        formControlName="last_name"
+        autocomplete="family-name"
+      />
+      @if (submitted && signupForm.get('last_name')?.invalid) {
+      <p class="error">Nom requis.</p>
+      }
+
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        autocomplete="email"
+      />
+      @if (submitted && signupForm.get('email')?.invalid) {
+      <p class="error">Email valide requis.</p>
+      }
+
+      <label for="emailConfirm">Confirmer l’email</label>
+      <input
+        id="emailConfirm"
+        type="email"
+        formControlName="emailConfirm"
+        autocomplete="email"
+      />
+      @if (submitted && signupForm.errors?.['emailMismatch']) {
+      <p class="error">Les emails ne correspondent pas.</p>
+      }
+
+      <label for="password">Mot de passe</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        autocomplete="new-password"
+      />
+      @if (submitted && signupForm.get('password')?.invalid) {
+      <p class="error">Mot de passe requis (6 caractères minimum).</p>
+      }
+
+      <label for="confirm_password">Confirmer le mot de passe</label>
+      <input
+        id="confirm_password"
+        type="password"
+        formControlName="confirm_password"
+        autocomplete="new-password"
+      />
+      @if (submitted && signupForm.errors?.['passwordMismatch']) {
+      <p class="error">Les mots de passe ne correspondent pas.</p>
+      } @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+      } @if (successMessage) {
+      <div class="success-message">
+        {{ successMessage }}
+      </div>
+      }
+      <div class="cgu-checkbox">
+        <label>
+          <input type="checkbox" formControlName="cgu_accepted" />
+          J’accepte les
+          <a href="/cgu" target="_blank">Conditions Générales d’Utilisation</a>
+        </label>
+        @if (submitted && signupForm.get('cgu_accepted')?.invalid) {
+        <p class="error">Vous devez accepter les CGU pour continuer.</p>
+        }
+      </div>
+
+      <button type="submit" class="submit-button">S'inscrire</button>
+    </form>
+  </div>
+</div>

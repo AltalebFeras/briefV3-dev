@@ -1,0 +1,81 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="person-form">
+
+  <!-- Prénom -->
+  <div class="form-group">
+    <label for="first_name">Prénom *</label>
+    <input type="text" id="first_name" formControlName="first_name" class="input">
+    <div class="error-msg" *ngIf="form.get('first_name')?.touched && form.get('first_name')?.invalid">
+      Le prénom est requis (3 à 50 caractères).
+    </div>
+  </div>
+
+  <!-- Nom -->
+  <div class="form-group">
+    <label for="last_name">Nom *</label>
+    <input type="text" id="last_name" formControlName="last_name" class="input">
+    <div class="error-msg" *ngIf="form.get('last_name')?.touched && form.get('last_name')?.invalid">
+      Le nom est requis (3 à 50 caractères).
+    </div>
+  </div>
+
+  <!-- Âge -->
+  <div class="form-group">
+    <label for="age">Âge *</label>
+    <input type="number" id="age" formControlName="age" min="1" max="99" class="input">
+    <div class="error-msg" *ngIf="form.get('age')?.touched && form.get('age')?.invalid">
+      L’âge est requis (entre 1 et 99).
+    </div>
+  </div>
+
+  <!-- Genre -->
+  <div class="form-group">
+    <label for="gender">Genre *</label>
+    <select id="gender" formControlName="gender" class="select">
+      <option value="">-- Sélectionner --</option>
+      <option *ngFor="let gender of genderOptions" [value]="gender">{{ gender }}</option>
+    </select>
+    <div class="error-msg" *ngIf="form.get('gender')?.touched && form.get('gender')?.invalid">
+      Le genre est requis.
+    </div>
+  </div>
+
+  <!-- Profil -->
+  <div class="form-group">
+    <label for="profile">Profil *</label>
+    <select id="profile" formControlName="profile" class="select">
+      <option value="">-- Sélectionner --</option>
+      <option *ngFor="let profile of profileOptions" [value]="profile">{{ profile }}</option>
+    </select>
+    <div class="error-msg" *ngIf="form.get('profile')?.touched && form.get('profile')?.invalid">
+      Le profil est requis.
+    </div>
+  </div>
+
+  <!-- Niveau de français -->
+  <div class="form-group">
+    <label for="french_level">Niveau de français *</label>
+    <select id="french_level" formControlName="french_level" class="select">
+      <option *ngFor="let level of [1,2,3,4]" [value]="level">{{ level }}</option>
+    </select>
+  </div>
+
+  <!-- Niveau technique -->
+  <div class="form-group">
+    <label for="tech_level">Niveau technique *</label>
+    <select id="tech_level" formControlName="tech_level" class="select">
+      <option *ngFor="let level of [1,2,3,4]" [value]="level">{{ level }}</option>
+    </select>
+  </div>
+
+  <!-- DWWM -->
+  <div class="form-group checkbox">
+    <input type="checkbox" id="dwwm" formControlName="dwwm">
+    <label for="dwwm">DWWM</label>
+  </div>
+
+  <!-- Boutons -->
+  <div class="button-group">
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Ajouter</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+  </div>
+</form>

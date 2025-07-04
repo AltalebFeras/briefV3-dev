@@ -1,0 +1,31 @@
+.mentions-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  background-color: #F3F3F3;
+  border-radius: 8px;
+}
+
+.mentions-container h1 {
+  color: #D10000;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.mentions-container h2 {
+  margin-top: 1.5rem;
+  color: #D10000;
+  font-size: 1.2rem;
+}
+
+.mentions-container p {
+  line-height: 1.6;
+}
+
+.last-update {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #666;
+}

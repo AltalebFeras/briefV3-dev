@@ -1,0 +1,227 @@
+[
+  {
+    "id": 1,
+    "name": "Les Marmottes",
+    "slug": "les-marmottes-123",
+    "created_at": "2024-01-15 14:30:00",
+    "personAmount": 16,
+    "tirageAmount": 5,
+    "userId": 5
+  },
+  {
+    "id": 2,
+    "name": "Team Rocket",
+    "slug": "team-rocket-456",
+    "created_at": "2024-01-16 09:15:30",
+    "personAmount": 12,
+    "tirageAmount": 3,
+    "userId": 1
+  },
+  {
+    "id": 3,
+    "name": "Les Survivants",
+    "slug": "les-survivants-789",
+    "created_at": "2024-01-17 10:00:00",
+    "personAmount": 9,
+    "tirageAmount": 2,
+    "userId": 8
+  },
+  {
+    "id": 4,
+    "name": "Les Discrets",
+    "slug": "les-discrets-101",
+    "created_at": "2024-01-18 11:30:00",
+    "personAmount": 4,
+    "tirageAmount": 1,
+    "userId": 12
+  },
+  {
+    "id": 5,
+    "name": "Bande de Nantes",
+    "slug": "bande-de-nantes-112",
+    "created_at": "2024-01-19 15:45:00",
+    "personAmount": 10,
+    "tirageAmount": 4,
+    "userId": 4
+  },
+  {
+    "id": 6,
+    "name": "Groupe BTP",
+    "slug": "groupe-btp-131",
+    "created_at": "2024-01-20 09:00:00",
+    "personAmount": 7,
+    "tirageAmount": 2,
+    "userId": 20
+  },
+  {
+    "id": 7,
+    "name": "Section Z",
+    "slug": "section-z-415",
+    "created_at": "2024-01-21 14:00:00",
+    "personAmount": 18,
+    "tirageAmount": 5,
+    "userId": 3
+  },
+  {
+    "id": 8,
+    "name": "Les Baroudeurs",
+    "slug": "les-baroudeurs-161",
+    "created_at": "2024-01-22 10:30:00",
+    "personAmount": 11,
+    "tirageAmount": 3,
+    "userId": 15
+  },
+  {
+    "id": 9,
+    "name": "Les Fourmis",
+    "slug": "les-fourmis-718",
+    "created_at": "2024-01-23 11:15:00",
+    "personAmount": 6,
+    "tirageAmount": 1,
+    "userId": 7
+  },
+  {
+    "id": 10,
+    "name": "Les Agitateurs",
+    "slug": "les-agitateurs-192",
+    "created_at": "2024-01-24 09:45:00",
+    "personAmount": 13,
+    "tirageAmount": 4,
+    "userId": 10
+  },
+  {
+    "id": 11,
+    "name": "Team Alpha",
+    "slug": "team-alpha-283",
+    "created_at": "2024-01-25 10:00:00",
+    "personAmount": 5,
+    "tirageAmount": 2,
+    "userId": 6
+  },
+  {
+    "id": 12,
+    "name": "Les Infiltrés",
+    "slug": "les-infiltrés-374",
+    "created_at": "2024-01-26 14:15:00",
+    "personAmount": 9,
+    "tirageAmount": 2,
+    "userId": 2
+  },
+  {
+    "id": 13,
+    "name": "Les Invisibles",
+    "slug": "les-invisibles-465",
+    "created_at": "2024-01-27 11:30:00",
+    "personAmount": 8,
+    "tirageAmount": 3,
+    "userId": 9
+  },
+  {
+    "id": 14,
+    "name": "La Meute",
+    "slug": "la-meute-556",
+    "created_at": "2024-01-28 09:00:00",
+    "personAmount": 17,
+    "tirageAmount": 6,
+    "userId": 11
+  },
+  {
+    "id": 15,
+    "name": "Les Allumés",
+    "slug": "les-allumés-647",
+    "created_at": "2024-01-29 10:45:00",
+    "personAmount": 14,
+    "tirageAmount": 5,
+    "userId": 13
+  },
+  {
+    "id": 16,
+    "name": "Les Stratèges",
+    "slug": "les-stratèges-738",
+    "created_at": "2024-01-30 11:00:00",
+    "personAmount": 12,
+    "tirageAmount": 4,
+    "userId": 17
+  },
+  {
+    "id": 17,
+    "name": "Les Nomades",
+    "slug": "les-nomades-829",
+    "created_at": "2024-01-31 09:15:00",
+    "personAmount": 10,
+    "tirageAmount": 3,
+    "userId": 19
+  },
+  {
+    "id": 18,
+    "name": "Les Pingouins",
+    "slug": "les-pingouins-910",
+    "created_at": "2024-02-01 10:30:00",
+    "personAmount": 7,
+    "tirageAmount": 2,
+    "userId": 14
+  },
+  {
+    "id": 19,
+    "name": "Les Cobras",
+    "slug": "les-cobras-011",
+    "created_at": "2024-02-02 11:45:00",
+    "personAmount": 15,
+    "tirageAmount": 5,
+    "userId": 22
+  },
+  {
+    "id": 20,
+    "name": "Les Inventeurs",
+    "slug": "les-inventeurs-122",
+    "created_at": "2024-02-03 09:00:00",
+    "personAmount": 6,
+    "tirageAmount": 1,
+    "userId": 16
+  },
+  {
+    "id": 21,
+    "name": "Les Bricolos",
+    "slug": "les-bricolos-233",
+    "created_at": "2024-02-04 10:15:00",
+    "personAmount": 13,
+    "tirageAmount": 4,
+    "userId": 23
+  },
+  {
+    "id": 22,
+    "name": "Les Tacticiens",
+    "slug": "les-tacticiens-344",
+    "created_at": "2024-02-05 11:30:00",
+    "personAmount": 8,
+    "tirageAmount": 2,
+    "userId": 18
+  },
+  {
+    "id": 23,
+    "name": "Les Vétérans",
+    "slug": "les-vétérans-455",
+    "created_at": "2024-02-06 09:45:00",
+    "personAmount": 11,
+    "tirageAmount": 3,
+    "userId": 21
+  },
+  {
+    "id": 24,
+    "name": "Les Suricates",
+    "slug": "les-suricates-566",
+    "created_at": "2024-02-07 10:00:00",
+    "personAmount": 5,
+    "tirageAmount": 2,
+    "userId": 24
+  },
+  {
+    "id": 25,
+    "name": "Team Horizon",
+    "slug": "team-horizon-789",
+    "created_at": "2024-02-20 11:45:00",
+    "personAmount": 16,
+    "tirageAmount": 6,
+    "userId": 25
+  }
+]

@@ -1,0 +1,23 @@
+<div class="groups-container">
+  @for (group of groups; track group.name; let i = $index) {
+  <div class="group-card">
+    <input type="text" [(ngModel)]="groups[i].name" [readonly]="isValidated" [class.readonly]="isValidated"/>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="group.members"
+      [cdkDropListConnectedTo]="dropListIds"
+      [id]="'group-' + i"
+      (cdkDropListDropped)="onDrop($event, i)"
+      [cdkDropListDisabled]="isValidated"
+      class="member-list"
+    >
+      @for (member of group.members; track member.id) {
+      <div cdkDrag [cdkDragDisabled]="isValidated" class="member-item">
+        {{ member.first_name }}
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

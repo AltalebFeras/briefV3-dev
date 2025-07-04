@@ -1,0 +1,170 @@
+/* Import de styles tiers */
+@import 'ngx-toastr/toastr';
+
+/* =========================
+   🎨 Variables globales
+   ========================= */
+:root {
+  --primary-color: #2b6a81;
+  --primary-dark: #123744;
+  --danger-color: #ef4444;
+  --bg-light: #F9F9FB;
+  --text-color: #333;
+  --border-radius: 8px;
+  --transition-fast: 0.2s ease;
+  --font-main: 'Montserrat', sans-serif;
+}
+
+/* =========================
+   🔧 Reset de base
+   ========================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-main);
+  color: var(--text-color);
+  background-color: var(--bg-light);
+  line-height: 1.6;
+}
+
+/* =========================
+   📱 Fond général
+   ========================= */
+body {
+  background-image: url("assets/BGSimplon.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+}
+
+/* =========================
+   🔗 Liens & accessibilité
+   ========================= */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover,
+a:focus {
+  color: var(--primary-dark);
+  outline: none;
+}
+
+/* Focus visibles au clavier */
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* =========================
+   🧱 Titres
+   ========================= */
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-color);
+  margin-bottom: 0.75rem;
+}
+
+/* =========================
+   🧩 Boutons génériques
+   ========================= */
+button {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* Bouton principal */
+button.primary,
+button[type='submit'],
+button:not([type]) {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+button.primary:hover,
+button[type='submit']:hover,
+button:not([type]):hover {
+  background-color: var(--primary-dark);
+  box-shadow: 0 2px 6px rgba(69, 52, 161, 0.25);
+}
+
+/* Bouton secondaire */
+button.secondary,
+button[type='button'] {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+button.secondary:hover,
+button[type='button']:hover {
+  background-color: #f3f3f3;
+}
+
+/* Bouton danger */
+button.danger,
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+button.danger:hover,
+.btn-danger:hover {
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.25);
+}
+
+/* =========================
+   🖥️ Responsivité générale
+   ========================= */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+/* Titres adaptables */
+h1 {
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Texte centré sur mobile si besoin */
+.center-mobile {
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .center-mobile {
+    text-align: left;
+  }
+}
