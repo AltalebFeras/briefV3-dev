@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class AuthService {
   private http = inject(HttpClient);
 
   // 🔒 URL de base de l’API utilisée pour les appels liés à l’authentification
-  private readonly apiUrl = 'http://193.134.250.16/api';
+  private apiUrl = environment.apiUrl; // Use environment variable
 
   constructor() {
     this.loadUserFromStorage();
@@ -110,7 +111,7 @@ export class AuthService {
 
   //   return 'user';
   // }
-  
+
   needsToAcceptTerms(): boolean {
     if (!this.currentUser?.cgu_accepted) return true;
 

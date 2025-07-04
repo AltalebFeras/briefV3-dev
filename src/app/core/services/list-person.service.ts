@@ -2,13 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Person } from '../../models/person';
 import { Observable, map, catchError, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ListPersonService {
   private readonly http = inject(HttpClient);
-  private apiUrl = 'http://193.134.250.16/api';
+  private apiUrl = environment.apiUrl; // Use environment variable
 
   // ✅ Create person
   addPersonToList(listSlug: string, personData: any): Observable<Person> {
